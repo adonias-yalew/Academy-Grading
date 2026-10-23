@@ -1,7 +1,7 @@
 // Mock authentication. NOT security: credentials live in the browser. Replace with real API auth.
 import { useSyncExternalStore } from "react";
 import type { Session, User } from "@/types";
-import { getDb } from "@/mocks/store";
+import { getDb, useMockDb } from "@/mocks/store";
 import { delay, ServiceError } from "./config";
 
 export interface AuthService {
@@ -70,6 +70,6 @@ export function useAuthState(): { ready: boolean; session: Session | null } {
 
 export function useCurrentUser(): User | null {
   const { session: s } = useAuthState();
-  const db = getDb();
+  const db = useMockDb();
   return s ? db.users.find((u) => u.id === s.userId) ?? null : null;
 }
